@@ -11,13 +11,14 @@ void Simulation::SetUp(){
     step_milliseconds_ = 10;
 }
 void Simulation::Run(){
+    int64_t slowdown_multiplier = 1;
     auto last_time = std::chrono::high_resolution_clock::now();
     
     std::cout << "Running" << std::endl;
     while (true){
         auto current_time = std::chrono::high_resolution_clock::now();
         double delta_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - last_time).count();
-        if (delta_time >= (step_milliseconds_)){
+        if (delta_time >= (slowdown_multiplier * step_milliseconds_)){
             Display();
             HandleUserInput();
             ProgressStep();
